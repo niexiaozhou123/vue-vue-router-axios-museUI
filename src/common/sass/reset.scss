@@ -1,0 +1,32 @@
+/**
+  重置museUI部分样式文件
+**/
+
+.mu-paper {
+  margin-bottom: 10px;
+}
+
+.mu-list {
+  padding: 0;
+}
+
+.mu-item {
+  height: auto;
+  min-height: 48px;
+}
+
+.mu-item-title {
+  line-height: normal;
+  height: auto;
+  width: auto;
+  font-size: 14px;
+}
+
+.mu-item-action {
+  min-width: 34px;
+}
+
+.mu-button,
+.mu-raised-button {
+  min-width: auto;
+}

@@ -1,0 +1,51 @@
+/**
+  通用样式文件
+**/
+.mar-right-5 {
+  margin-right: 5px;
+}
+
+.icon-right {
+  color: #C7C7CC;
+}
+
+.question-mark {
+  font-size: 20px;
+}
+
+.show-info-value {
+  font-size: 22px;
+  color: #000;
+}
+
+.text-color-gray {
+  color: #9e9e9e;
+}
+
+.text-color-black {
+  color: #333;
+}
+
+.whole-screen-wrapper {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #eee !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+.whole-screen-wrapper2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #eee !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+.container{
+    overflow:auto !important;
+}
