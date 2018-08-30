@@ -6,8 +6,16 @@
 			</mu-flex>
 			个人信息
 		</mu-appbar>
+		
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>
+			</mu-button>
+		</mu-scale-transition>
 
-		<mu-container>
+		<mu-container  class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top: 12px !important;'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" >
 				<mu-paper :z-depth="3">
 					<mu-list>
@@ -69,18 +77,18 @@
 						</mu-list-item>
 						<mu-divider></mu-divider>
 						<mu-list-item button :ripple="false" >
-							<mu-data-table height="600" :columns="columns" :sort.sync="sort" :data="userList" :loading='loading' stripe >
+							<mu-data-table height="600" :columns="columns" :sort.sync="sort" :data="userList" :loading='loading' stripe  style='width: 100%;'>
 								<template slot-scope="scope" >
 									<td>{{scope.row.level}}%</td>
 
-									<td class="is-right" v-if='scope.row.num>-1'>{{scope.row.num}}</td>
-									<td class="is-right" v-if='scope.row.num<=-1'>不限</td>
+									<td class="is-left" v-if='scope.row.num>-1'>{{scope.row.num}}</td>
+									<td class="is-left" v-if='scope.row.num<=-1'>不限</td>
 
-									<td class="is-right" v-if='scope.row.num>-1&&scope.row.use_num>-1'>{{scope.row.num - scope.row.use_num}}</td>
-									<td class="is-right" v-if='scope.row.num<=-1||scope.row.use_num<=-1'>不限</td>
+									<td class="is-left" v-if='scope.row.num>-1&&scope.row.use_num>-1'>{{scope.row.num - scope.row.use_num}}</td>
+									<td class="is-left" v-if='scope.row.num<=-1||scope.row.use_num<=-1'>不限</td>
 
-									<td class="is-right" v-if='scope.row.use_num>-1'>{{scope.row.use_num}}</td>
-									<td class="is-right" v-if='scope.row.use_num<=-1'>不限</td>
+									<td class="is-left" v-if='scope.row.use_num>-1'>{{scope.row.use_num}}</td>
+									<td class="is-left" v-if='scope.row.use_num<=-1'>不限</td>
 								</template>
 							</mu-data-table>
 						</mu-list-item>
@@ -194,22 +202,26 @@
 				refreshing: false,
 				columns: [{
 						title: '比例(%)',
-						width: 85,
+						align:'left',
+						cellAlign:'center',
 						name: 'bili'
 					},
 					{
 						title: '总计',
-						width: 80,
+						align:'left',
+						cellAlign:'center',
 						name: 'zongji'
 					},
 					{
 						title: '已用',
-						width: 80,
+						align:'left',
+						cellAlign:'center',
 						name: 'yiyong'
 					},
 					{
 						title: '剩余',
-						width: 80,
+						align:'left',
+						cellAlign:'center',
 						name: 'shengyu'
 					},
 				],
@@ -218,6 +230,7 @@
 					order: 'asc'
 				},
 				loading: false,
+				topUp:false,
 			}
 		},
 		computed: {
@@ -264,7 +277,24 @@
 			},
 			result_pwd(){
 				this.$router.push('/user/result/');
-			}
+			},
+			woListScroll(event) {
+				var scrollTop = event.target.scrollTop;
+				if(scrollTop > 1) {
+					this.topUp = true;
+				} else {
+					window.clearInterval(this.temp);
+					this.topUp = false;
+				}
+			},
+			onTop() {
+				var that = this;
+				var num = setInterval(function() {
+					that.$el.childNodes[4].scrollTop = that.$el.childNodes[4].scrollTop - 150 || 0;
+				}, 50)
+				that.temp = num;
+				//				this.$el.childNodes[4].scrollTop= 0 ;
+			},
 			
 		},
 		components: {
@@ -273,16 +303,19 @@
 	}
 </script>
 
-<style type="text/css">
-	.container {
-		margin-top: 65px !important;
-		overflow: hidden !important;
-	}
+<style type="text/css" scoped>
+	
 	
 	.start {
 		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
+	}
+	.top_style {
+		position: fixed !important;
+		bottom: 20px;
+		right: 30px;
+		z-index: 9999;
 	}
 </style>

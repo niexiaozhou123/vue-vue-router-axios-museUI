@@ -90,7 +90,10 @@
 				bankCardWithdraw(url, params).then((res) => {
 					if(res&&res.status === ERROR_OK) {
 						this.setup = true;
-						eventBus.$emit('showNotification','结算密码修改成功')
+						eventBus.$emit('showNotification','结算密码修改成功');
+						setTimeout(()=>{
+							this.$router.back();
+						},2000)	
 					} else {
 						eventBus.$emit('showNotification',res.msg)
 					}
@@ -111,7 +114,6 @@
 		background-color:#fff;
 	}
 	.user-result-margin{
-		margin:32px 0;
 		padding: 0 20px;
 	}
 	.modify-btn{

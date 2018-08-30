@@ -8,11 +8,15 @@
 			<mu-icon value="add_circle_outline" class="add-circle-outline" slot="right" @click="goExtendEdit"></mu-icon>
 		</mu-appbar>
 
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>			
+			</mu-button>
+		</mu-scale-transition>
 
-		<mu-container class="whole-screen-wrapper2" @scroll='woListScroll($event)' style='margin-top: 0 !important; overflow: auto !important;'>
+		<mu-container class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top: 10px !important; overflow: auto !important;'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" @load='loadMore' :loading='loading'>
 				<div class="extend-margin" v-for="(getNameList,index) in getNameLists" :key="index">
 					<mu-paper :z-depth="3" style='padding: 0 8px; background-color: #FFFFFF !important;'>
@@ -111,18 +115,19 @@
 				this.$refs.container.scrollTop = 0;
 				setTimeout(() => {
 					this.refreshing = false;
-					this.getNameLists.length = this.getNameLists.length;
+					this.getNameLists.length=0;
+					this.pageNum =1;
 					this.load();
 				}, 1200)
 
 			},
 			loadMore() {
-				//				this.pageNum = this.pageNum + 1;
-				//				this.loading = true;
-				//				setTimeout(() => {										
-				//					this.loading = false;
-				//					
-				//				}, 1200)
+				this.pageNum = this.pageNum + 1;
+				this.loading = true;
+				setTimeout(() => {										
+					this.loading = false;
+					this.load();
+				}, 1200)
 
 			},
 			woListScroll(event) {
@@ -135,7 +140,6 @@
 				}
 			},
 			onTop() {
-				console.log('--');
 				var that = this;
 				var num = setInterval(function() {
 					that.$el.childNodes[4].scrollTop = that.$el.childNodes[4].scrollTop - 150 || 0;
@@ -152,14 +156,21 @@
 					.then((res) => {
 						//					console.log(res.data.data)
 						if(res.data && res.data.status == 0) {
-							this.getNameLists = res.data.data;
-							//							if(this.pageNum > 1) {
-							//								this.getNameLists.length = this.getNameLists.length + 13;
-							//							}
-							for(var i = 0; i < this.getNameLists.length; i++) {
-								this.getNameLists[i].spread_img = this.$apps.spreadUrl(this.getNameLists[i].spread_img);
-//								this.getNameLists[i].url = encodeURIComponent(this.getNameLists[i].url);
+							
+							if(this.pageNum ==1) {
+								this.getNameLists = res.data.data;
+								for(var i = 0; i < this.getNameLists.length; i++) {
+									this.getNameLists[i].spread_img = this.$apps.spreadUrl(this.getNameLists[i].spread_img);
+	//								this.getNameLists[i].url = encodeURIComponent(this.getNameLists[i].url);
+								}
+							}else{
+								var count = res.data.data.length;
+								for(var i = 0; i < count; i++) {
+									res.data.data[i].spread_img = this.$apps.spreadUrl(res.data.data[i].spread_img);
+									this.detailInfo.push(res.data.data[i]);
+								}
 							}
+							
 						} else if(!res.data.status) {
 							eventBus.$emit('showNotification', '登录已过期')
 						} else {
@@ -221,7 +232,7 @@
 	
 	.extend-margin {
 		min-height: 40px;
-		margin: 65px 8px 8px 8px;
+		margin: 8px;
 		position: relative;
 		background-color: #fff;
 	}

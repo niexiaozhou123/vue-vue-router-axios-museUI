@@ -101,7 +101,6 @@
 			
 
 			var urlName = that.$router.history.current.fullPath;
-			console.log(urlName);
 			if(urlName) {
 				if(urlName.indexOf('/') != -1) {
 					sessionStorage.spread_user = "";

@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+  	<!-- 使用动态的 transition name -->
+		<transition :name="transitionName">
+		  <router-view></router-view>
+		</transition>
+    <!--<router-view></router-view>-->
     <!-- 提示信息框，全局可用 -->
     <mu-snackbar position="top" color="#fff" :open.sync="showNotification">
       {{notificatioMsg}}
@@ -16,7 +20,8 @@ export default {
   data () {
     return {
       showNotification: false,
-      notificatioMsg: ''
+      notificatioMsg: '',
+      transitionName:'slide-left'
     }
   },
   created () {
@@ -43,12 +48,49 @@ export default {
       }, time)
 
     }
+  },
+  watch:{
+  	$route(to,from){
+  		if(to.meta.index>from.meta.index){
+  			this.transitionName = 'slide-left';
+  		}else{
+  			this.transitionName = 'slide-right';
+  		}
+  	}
   }
 }
 
 </script>
-<style>
+<style type="text/css">
 .mu-snackbar-message {
   color: #333 !important;
+}
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 0.4s;
+  position: absolute;
+}
+.slide-right-enter {
+  opacity: 0.5;
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transform:translate3d(-100%, 0, 0);
+}
+.slide-right-leave-active {
+  opacity: 0.5;
+  transform: translate3d(100%, 0, 0);
+   -webkit-transform:translate3d(-100%, 0, 0);
+}
+.slide-left-enter {
+  opacity: 0.5;
+  transform: translate3d(100%, 0, 0);
+  -webkit-transform:translate3d(-100%, 0, 0);
+}
+.slide-left-leave-active {
+  opacity: 0.5;
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transform:translate3d(-100%, 0, 0);
 }
 </style>

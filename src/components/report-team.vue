@@ -12,11 +12,16 @@
 		</mu-appbar>
 
 		<!-- 内容主体 -->
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>
+			</mu-button>
+		</mu-scale-transition>
+		
 
-		<mu-container class="whole-screen-wrapper" @click='delInfo' @scroll='woListScroll($event)' style='margin-top: 0 !important; overflow: auto !important;'>
+		<mu-container class="whole-screen-wrapper" @click='delInfo' @scroll='woListScroll($event)' style='margin-top: 10px !important; overflow: auto !important;'>
 			<!-- 用户信息 -->
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
 				<mu-flex class="user-info">
@@ -35,7 +40,9 @@
 										<img :src="getIconUrl('icon-title')" style="width: 50%;">
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 info-title">团队总计</mu-flex>
-									<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+									<mu-slide-top-transition>
+										<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 							<mu-list-item-action @click='team_count'>
@@ -62,7 +69,9 @@
 						<mu-list-item :ripple="false">
 							<mu-list-item-title>
 								<mu-flex direction="column">
-									<span v-if='info3' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数	</span>
+									<mu-slide-top-transition>
+										<span v-if='info3' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数	</span>
+									</mu-slide-top-transition>
 									<mu-flex align-items="center">
 										<mu-flex justify-content="center" class="mar-right-5">团队正流水</mu-flex>
 										<mu-flex justify-content="center">
@@ -74,7 +83,9 @@
 							</mu-list-item-title>
 							<mu-list-item-action>
 								<mu-flex direction="column">
-									<span v-if='info2' class='helpInfo'>团队正流水：旗下玩家从系统赢走的流水总数</span>
+									<mu-slide-top-transition>
+										<span v-if='info2' class='helpInfo'>团队正流水：旗下玩家从系统赢走的流水总数</span>
+									</mu-slide-top-transition>
 									<mu-flex align-items="center">
 										<mu-flex justify-content="center" class="mar-right-5 text-color-black">团队负流水</mu-flex>
 										<mu-flex justify-content="center">
@@ -96,7 +107,9 @@
 									</mu-flex>
 								</mu-flex>
 							</mu-list-item-title>
-							<span v-if='info4' class='helpInfo'>个人税收收益：团队税收收益总额-所有直属代理团队税收收益总额	</span>
+							<mu-slide-top-transition>
+								<span v-if='info4' class='helpInfo'>个人税收收益：团队税收收益总额-所有直属代理团队税收收益总额	</span>
+							</mu-slide-top-transition>
 							<mu-list-item-action class="show-info-value tax-profit">{{total_tax}}</mu-list-item-action>
 						</mu-list-item>
 					</mu-list>
@@ -372,6 +385,12 @@
 			}
 		}
 	}
+	.start {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
 	
 	.mu-form-item {
 		margin-bottom: 5px;
@@ -382,15 +401,18 @@
 	}
 	
 	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
 	}
 	
 	.top_style {

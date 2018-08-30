@@ -13,7 +13,7 @@
 			<mu-icon value="arrow_upward"></mu-icon>
 		</mu-button>
 
-		<mu-container class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top:0 !important; overflow: auto !important;'>
+		<mu-container class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top:10px !important; overflow: auto !important;'>
 			<!-- 用户信息 -->
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" :loading='loading' @load="load2" loading-text='正在加载...'>
 				<mu-flex class="user-info" style='display: flex; flex-direction: row !important; justify-content: space-between !important;'>
@@ -224,6 +224,12 @@
 			}
 		}
 	}
+	.start {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
 	
 	.mu-form-item {
 		margin-bottom: 5px;
@@ -233,17 +239,6 @@
 		width: 100%;
 	}
 	
-	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
-	}
 	
 	.top_style {
 		position: fixed !important;
@@ -259,9 +254,10 @@
 	
 	.tip_text {
 		padding-top: 5px !important;
-		padding-left: 23% !important;
+		padding-left: 42% !important;
 		width: max-content !important;
 		margin: 0 auto !important;
 		font-size: 15px !important;
+		font-weight: 800;
 	}
 </style>

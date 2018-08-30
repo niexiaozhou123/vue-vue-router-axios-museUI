@@ -123,7 +123,7 @@
 				}
 				getAccountInfo(url, params).then((res) => {
 					if(res.status === ERROR_OK) {
-						eventBus.$emit('showNotification', res.msg)
+						
 					} else if(!res.status) {
 						eventBus.$emit('showNotification', '登录已过期')
 					} else {

@@ -98,7 +98,6 @@
 		background-color: #fff;
 	}
 	.user-margin{
-		margin:32px 0;
 		padding: 0 20px;
 	}
 	.mu-button-wrapper{

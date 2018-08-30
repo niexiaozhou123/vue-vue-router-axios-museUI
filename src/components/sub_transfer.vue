@@ -204,7 +204,9 @@
 
 			},
 			openDialog() {
+				
 				this.openFullscreen = true;
+				console.log('--')
 			},
 			closeDialog() {
 				this.openFullscreen = false;

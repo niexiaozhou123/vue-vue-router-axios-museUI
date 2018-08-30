@@ -7,7 +7,7 @@
 			代理详情
 		</mu-appbar>
 
-		<mu-container>
+		<mu-container style='margin-top: 10px !important;'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
 				<mu-paper :z-depth="3">
 					<mu-list>
@@ -69,22 +69,21 @@
 						</mu-list-item>
 						<mu-divider></mu-divider>
 						<mu-list-item button :ripple="false">
-							<mu-data-table height="310" :columns="columns" :sort.sync="sort" :data="userList" :loading='loading'>
+							<mu-data-table height="310" :columns="columns" :sort.sync="sort" :data="userList" :loading='loading' stripe  style='width: 100%;'>
 								<template slot-scope="scope">
 									<td v-if='scope.row.num!="0"'>{{scope.row.level}}%</td>
 									
-									<td class="is-right" v-if='scope.row.num>-1&&scope.row.num!="0"'>{{scope.row.num}}</td>
-									<td class="is-right" v-if='scope.row.num<=-1&&scope.row.num!="0"'>不限</td>
+									<td class="is-left" v-if='scope.row.num>-1&&scope.row.num!="0"'>{{scope.row.num}}</td>
+									<td class="is-left" v-if='scope.row.num<=-1&&scope.row.num!="0"'>不限</td>
 									
-									<td class="is-right" v-if='scope.row.use_num>-1&&scope.row.num!="0"'>{{scope.row.use_num}}</td>
-									<td class="is-right" v-if='scope.row.use_num<=-1&&scope.row.num!="0"'>不限</td>
+									<td class="is-left" v-if='scope.row.use_num>-1&&scope.row.num!="0"'>{{scope.row.use_num}}</td>
+									<td class="is-left" v-if='scope.row.use_num<=-1&&scope.row.num!="0"'>不限</td>
 								</template>
 							</mu-data-table>
 						</mu-list-item>
 					</mu-list>
 				</mu-paper>
 
-				<!--两个密码修改还没做完！！！-->
 				<mu-paper :z-depth="3">
 					<mu-list>
 						<mu-list-item button :ripple="false">
@@ -125,18 +124,21 @@
 				refreshing: false,
 				columns: [{
 						title: '分成档位',
-						width: 110,
+						algin:'left',
+						cellAlign:'center',
 						name: 'bili'
 					},
 					{
 						title: '配额分发',
-						width: 110,
+						algin:'right',
+						cellAlign:'left',
 						name: 'zongji'
 					},
 					
 					{
 						title: '剩余配额',
-						width: 110,
+						algin:'right',
+						cellAlign:'left',
 						name: 'shengyu'
 					},
 				],
@@ -203,16 +205,16 @@
 	}
 </script>
 
-<style type="text/css">
-	.container {
-		margin-top: 65px !important;
-		overflow: hidden !important;
-	}
+<style type="text/css" scoped>
+	
 	
 	.start {
 		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
+	}
+	.is-right{
+		/*padding-left: 0 !important;*/
 	}
 </style>

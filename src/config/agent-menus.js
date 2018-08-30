@@ -38,7 +38,7 @@ const allMenus = {
     part: 'two'
   },
   'record': {
-    name: '提转记录',
+    name: '提款记录',
     icon: 'icon-pay-record',
     link: '/pay/record/',
     part: 'two'
@@ -56,13 +56,13 @@ const allMenus = {
     part: 'two'
   },
   'extend': {
-    name: '二维码推广链接',
+    name: '玩家后置注册链接',
     icon: 'icon-extend',
     link: '/extend/',
     part: 'two'
   },
   'create': {
-    name: '前置注册链接',
+    name: '玩家前置注册链接(推荐)',
     icon: 'icon-extend',
     link: '/copy/create/',
     part: 'two'

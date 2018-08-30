@@ -2,6 +2,8 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import MuseUI from 'muse-ui'
+import Helpers from 'muse-ui/lib/Helpers';
+import Toast from 'muse-ui-toast';
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui-message/dist/muse-ui-message.css';
 import Message from 'muse-ui-message';
@@ -24,6 +26,11 @@ Vue.use(MuseUI)
 Vue.use(VueClipboard)  //copy组件
 Vue.use(Message)       //消息组件
 Vue.use(VuePreview)    //图片查看组件
+Vue.use(Helpers)       //工具类 动画 特效等
+Vue.use(Toast)         //消息提示
+/*
+ *之后如对弹框有主题需求 在做修改  toast控件 
+ * */
 Vue.prototype.$axios = axios;  //axios请求
 
 Vue.prototype.$spreadFormat = spreadFormat;  //double转换

@@ -22,9 +22,8 @@ import {prefix, currentAgent} from 'common/js/config.js'
 export default {
   props: {
     reportListDatas: {
-      type: Array,
       default () {
-        return []
+        return {}
       }
     },
     detailPageUrl: {

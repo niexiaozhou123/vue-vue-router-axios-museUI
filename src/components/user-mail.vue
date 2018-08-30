@@ -104,7 +104,6 @@
 		font-size:16px !important;
 	}
 	.user-margin{
-		margin:32px 0;
 		padding: 0 10px;
 	}
 </style>

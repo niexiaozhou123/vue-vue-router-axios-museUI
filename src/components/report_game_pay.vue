@@ -10,6 +10,14 @@
 				<mu-icon value="search" size="24"></mu-icon>搜索
 			</mu-button>
 		</mu-appbar>
+		
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>				
+			</mu-button>
+		</mu-scale-transition>
 
 		<mu-container style="padding:0 16px;overflow: hidden;">
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
@@ -22,45 +30,44 @@
 
 				<span class='tip_text' ref='tip_text' :style='{color:tip_textColor,background:tip_textbgc}'>{{tip_text}}</span>
 
-				<mu-paper :z-depth="3" v-for='item in datalist' :key='item.id'>
+				<mu-paper :z-depth="3" v-for='(item,index) in datalist' :key='index' v-show='noData==false'>
 					<mu-list>
-						<mu-list-item avatar class='infoTitle'>
-							<mu-list-item-action class='infoTitle_msg'>{{item.created}}</mu-list-item-action>
-							<mu-list-item-content></mu-list-item-content>
+						<mu-list-item  class='infoName'>
 							<mu-list-item-action class='infoTitle_msg'>{{item.name}}</mu-list-item-action>
+							<mu-list-item-content></mu-list-item-content>
+							<mu-list-item-action ></mu-list-item-action>
 						</mu-list-item>
 						<mu-list-item avatar>
 							<mu-list-item-action>
-								订单编号<span class="infoText"> {{item.id}}</span>
+								订单编号<span class="infoText"> </span>
 							</mu-list-item-action>
 							<mu-list-item-content></mu-list-item-content>
 							<mu-list-item-action>
-								游戏ID号 <span class="infoText">{{item.gameId}}</span>
-							</mu-list-item-action>
-						</mu-list-item>
-						<mu-divider></mu-divider>
-						<mu-list-item avatar>
-							<mu-list-item-action>
-								游戏名称<span class="infoText">{{item.gname}}</span>
-							</mu-list-item-action>
-							<mu-list-item-content></mu-list-item-content>
-							<mu-list-item-action>
-								游戏房间<span class="infoText">{{item.sname}}</span>
+								充值金额 <span class="infoText">{{item.amount}}</span>
 							</mu-list-item-action>
 						</mu-list-item>
 						<mu-divider></mu-divider>
 						<mu-list-item avatar>
 							<mu-list-item-action>
-								{{dataText}}<span class="infoText" v-if="item.profit>0" style="color: green !important;">{{item.profit}}</span>
-								<span class="infoText" v-else style="color: red !important;">{{item.profit}}</span>
+								充值方式<span class="infoText">{{item.pay_type}}</span>
 							</mu-list-item-action>
 							<mu-list-item-content></mu-list-item-content>
 							<mu-list-item-action>
-								{{dataText2}}<span class="infoText">{{item.tax}}</span>
+								充值状态<span class="infoText">{{item.status}}</span>
 							</mu-list-item-action>
+						</mu-list-item>
+						<mu-divider></mu-divider>
+						<mu-list-item avatar>
+							<mu-list-item-action>
+								发起时间
+							</mu-list-item-action>
+							<mu-list-item-content></mu-list-item-content>
+							<mu-list-item-action></mu-list-item-action>
 						</mu-list-item>
 					</mu-list>
 				</mu-paper>
+				
+				<label v-show="noData" class="noData">暂无数据</label>
 
 			</mu-load-more>
 
@@ -132,7 +139,10 @@
 				openSearch: false,
 				tip_text: '*仅展示近一个月内的报表数据',
 				tip_textColor: '#f44336',
-				tip_textbgc: 'none'
+				tip_textbgc: 'none',
+				noData:false,
+				topUp:false,
+				
 
 			}
 		},
@@ -194,17 +204,15 @@
 					.then((response) => {
 						//						console.log(response.data.data)
 						if(response.data && response.data.status == 0 && response.data.data) {
+							
 							if(!response.data.data || response.data.data == '') {
 								eventBus.$emit('showNotification', '该账户暂无此权限..')
+								this.noData = true;
 								return;
 							}
+							this.noData = false;
 							this.datalist = {};
-							this.dataText = '游戏流水';
-							this.dataText2 = '税收收益';
-							this.datalist = response.data.data.dataLst;
-							for(var i = 0; i < this.datalist.length; i++) {
-								this.datalist[i].profit = Number(this.datalist[i].profit);
-							}
+							this.datalist = response.data.data.orderLst;
 						} else if(!response.data.status) {
 							eventBus.$emit('showNotification', '登录已过期')
 						} else {
@@ -227,11 +235,11 @@
 						if(response.data && response.data.status == 0 && response.data.data) {
 							if(!response.data.data.withdrawLst || response.data.data.withdrawLst == '') {
 								eventBus.$emit('showNotification', '该账户暂无此权限..')
+								this.noData = true;
 								return;
 							}
+							this.noData = false;
 							this.datalist = {};
-							this.dataText = '游戏盈亏';
-							this.dataText2 = '亏损收益';
 							this.datalist = response.data.data.withdrawLst;
 							for(var i = 0; i < this.datalist.length; i++) {
 								this.datalist[i].profit = Number(this.datalist[i].profit);
@@ -356,11 +364,20 @@
 	}
 	
 	.tip_text {
-		padding-top: 5px !important;
-		padding-left: 23% !important;
-		width: max-content !important;
+		padding-top: 10px !important;
+		padding-left: 30% !important;
+		
 		margin: 0 auto !important;
 		font-size: 12px !important;
+	}
+	.noData{
+		color: darkgray;
+		position: fixed;
+		left: 42%;
+		top: 50%;
+	}
+	.infoName{
+		background-color: rgb(28,131,210);
 	}
 	
 	.mu-form-item {
@@ -372,14 +389,23 @@
 	}
 	
 	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
+	}
+	.top_style {
+		position: fixed !important;
+		bottom: 20px;
+		right: 30px;
+		z-index: 9999;
 	}
 </style>

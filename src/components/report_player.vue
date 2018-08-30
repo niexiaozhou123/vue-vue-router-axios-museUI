@@ -12,11 +12,16 @@
 		</mu-appbar>
 
 		<!-- 内容主体 -->
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>	
+			</mu-button>
+		</mu-scale-transition>
+		
 
-		<mu-container class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top: 0 !important; overflow: auto !important;'>
+		<mu-container class="whole-screen-wrapper" @scroll='woListScroll($event)' style='margin-top: 10px !important; overflow: auto !important;'>
 			<!-- 用户信息 -->
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
 				<mu-flex class="user-info">
@@ -148,7 +153,7 @@
 				user: null,
 				refreshing: false,
 				detailInfo: {},
-				reportListDatas: {},
+				reportListDatas: [],
 				agntInfo: {},
 
 				player_count: null,
@@ -354,6 +359,12 @@
 				color: #f44336;
 			}
 		}
+	}
+	.start {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
 	}
 	
 	.mu-form-item {

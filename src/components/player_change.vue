@@ -261,13 +261,28 @@
 					})
 					.then((response) => {
 						if(response.data && response.data.status == 0 && response.data.data) {
+
 							this.choseList = response.data.data.ratioLst;
 							//下拉框的值更改
+							var share;
+//							for(var i = 0; i < this.choseList.length; i++) {
+//								if(this.choseList[i].assign_num != '0') {
+//									if(this.choseList[i].assign_num > -1){
+//										share = this.choseList[i].assign_num;
+//									}else{
+//										share = '无限';
+//									}									
+//									this.choseList2.push(this.choseList[i].level + '%  ' + share);
+//								}
+//							}
 							for(var i = 0; i < this.choseList.length; i++) {
-								if(this.choseList[i].assign_num != '0') {
-									var share = this.choseList[i].assign_num > -1 ? this.choseList[i].assign_num : '无限';
-									this.choseList2.push(this.choseList[i].level + '%  ' + share);
+								if(this.choseList[i].assign_num<=0){
+									share='无限';	
+									if(this.choseList[i].level>0&&this.choseList[i].level<50){
+										this.choseList2.push(this.choseList[i].level + '%  ' + share);
+									}
 								}
+									
 							}
 							//
 							this.currentRate = Number(this.choseList2[0].split('%')[0]);
@@ -295,6 +310,7 @@
 					arr.remain = this.dataList[i].assign_num == -1 ? '无限制' : this.dataList[i].assign_num;
 					arr.quota_text = this.dataList[i].assign_num == -1 ? '取消' : '';
 					arr.quote_val = this.dataList[i].assign_num == -1 ? 'MAX' : '0';
+					
 					this.list.push(arr);
 					//数据二次检验
 					//					if(this.list[i].level.slice(0,1)==0||this.list[i].remain==0){

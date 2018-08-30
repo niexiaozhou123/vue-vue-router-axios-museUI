@@ -1,13 +1,13 @@
 <template>
 	<div class="report-team-detail" @click='delInfo'>
 		<!-- 头部导航 -->
-		<mu-appbar color="primary">
+		<mu-appbar color="primary" class='start'>
 			<mu-flex slot="left">
 				<back></back>
 			</mu-flex>
 			日度报表
 		</mu-appbar>
-		<mu-container class="whole-screen-wrapper" style='margin-top: 0 !important; overflow-y: auto !important;'>
+		<mu-container class="whole-screen-wrapper" style='margin-top: 10px !important; overflow-y: auto !important;'>
 			<!-- 用户信息 -->
 			<mu-paper :z-depth="3" class="user-info">
 				<mu-list>
@@ -45,7 +45,9 @@
 								<mu-flex justify-content="center">
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="1"></mu-icon>
 								</mu-flex>
-								<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+								<mu-slide-top-transition>
+									<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+								</mu-slide-top-transition>
 							</mu-flex>
 						</mu-list-item-title>
 						<mu-list-item-action>{{flow}}</mu-list-item-action>
@@ -58,7 +60,9 @@
 								<mu-flex justify-content="center">
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="2"></mu-icon>
 								</mu-flex>
-								<span v-if='info2' class='helpInfo'>团队正流水：旗下玩家从系统赢走的流水总数</span>
+								<mu-slide-top-transition>
+									<span v-if='info2' class='helpInfo'>团队正流水：旗下玩家从系统赢走的流水总数</span>
+								</mu-slide-top-transition>
 							</mu-flex>
 						</mu-list-item-title>
 						<mu-list-item-action>{{pflow}}</mu-list-item-action>
@@ -71,7 +75,9 @@
 								<mu-flex justify-content="center">
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="3"></mu-icon>
 								</mu-flex>
-								<span v-if='info3' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数</span>
+								<mu-slide-top-transition>
+									<span v-if='info3' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数</span>
+								</mu-slide-top-transition>
 							</mu-flex>
 						</mu-list-item-title>
 						<mu-list-item-action>{{nflow}}</mu-list-item-action>
@@ -84,7 +90,10 @@
 								<mu-flex justify-content="center">
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="4"></mu-icon>
 								</mu-flex>
-								<span v-if='info4' class='helpInfo'>团队税收收益：团队的税收收益总额（团队总流水*计税税率*团队最高代理分红额度）</span>
+								<mu-slide-top-transition>
+									<span v-if='info4' class='helpInfo'>团队税收收益：团队的税收收益总额（团队总流水*计税税率*团队最高代理分红额度）</span>
+									<span v-if='info5' class='helpInfo'>个人税收收益：团队税收收益总额-所有直属代理团队税收收益总额</span>
+								</mu-slide-top-transition>
 							</mu-flex>
 						</mu-list-item-title>
 						<mu-list-item-action>{{group_taxincome}}</mu-list-item-action>
@@ -96,8 +105,7 @@
 								<mu-flex justify-content="center" class="mar-right-5 text-color-gray">个人税收收益</mu-flex>
 								<mu-flex justify-content="center">
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="5"></mu-icon>
-								</mu-flex>
-								<span v-if='info5' class='helpInfo'>个人税收收益：团队税收收益总额-所有直属代理团队税收收益总额</span>
+								</mu-flex>	
 							</mu-flex>
 						</mu-list-item-title>
 						<mu-list-item-action>{{profit}}</mu-list-item-action>
@@ -118,7 +126,9 @@
 									<mu-flex justify-content="center">
 										<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="6"></mu-icon>
 									</mu-flex>
-									<span v-if='info6' class='helpInfo'>亏损：团队在所有人机游戏中的盈亏总额（玩家输给系统视为代理盈利，玩家盈利视为代理亏损）</span>
+									<mu-slide-top-transition>
+										<span v-if='info6' class='helpInfo'>亏损：团队在所有人机游戏中的盈亏总额（玩家输给系统视为代理盈利，玩家盈利视为代理亏损）</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-flex>
 						</mu-list-item-title>
@@ -157,7 +167,9 @@
 									<mu-flex justify-content="center">
 										<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="7"></mu-icon>
 									</mu-flex>
-									<span v-if='info7' class='helpInfo'>总充值：团队所有玩家总充值额度   总提现：团队所有玩家总提现额度</span>
+									<mu-slide-top-transition>
+										<span v-if='info7' class='helpInfo'>总充值：团队所有玩家总充值额度   总提现：团队所有玩家总提现额度</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-flex>
 						</mu-list-item-title>
@@ -389,14 +401,25 @@
 	}
 	
 	.helpInfo {
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		left: 10px;
+		right: 10px;
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
+	}
+	.start {
 		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 5px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		top: 0;
+		left: 0;
+		right: 0;
 	}
 </style>

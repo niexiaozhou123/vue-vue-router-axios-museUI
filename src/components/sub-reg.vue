@@ -260,7 +260,7 @@
 						nick_name: agentInfo.nick_name,
 						password: agentInfo.password,
 						dosubmit: 1,
-						divided_proportion: this.currentRate.slice(0,this.currentRate-1),
+						divided_proportion: this.currentRate,
 						source_group: agentInfo.source_group,
 						ids: agentInfo.ids,
 						peedu: agentInfo.peedu,
@@ -279,11 +279,14 @@
 									}
 								})
 							}, 1000)
+						}else{
+							eventBus.$emit('showNotification', res.data.msg)
 						}
 					})
 					.catch(function(err) {
 						eventBus.$emit('showNotification', err)
 					})
+//				console.log('currentRate:'+this.currentRate)
 
 			},
 		},

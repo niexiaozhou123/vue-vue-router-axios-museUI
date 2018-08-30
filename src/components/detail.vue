@@ -6,9 +6,19 @@
 			</mu-flex>
 			收益详情
 		</mu-appbar>
+		
+		
+		
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>
+			</mu-button>
+		</mu-scale-transition>
 
-		<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
-			<mu-container @click='delInfo'>
+		<mu-container @click='delInfo' style='margin-top: 10px !important;' class="whole-screen-wrapper" @scroll='woListScroll($event)'>
+			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
 				<mu-paper :z-depth="3" class="my-agent">
 					<mu-list>
 						<mu-list-item>
@@ -19,9 +29,10 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">我的收益</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="1"></mu-icon>
-									<span v-if='info1' class='helpInfo'> 我的收益：我的税收收益总和</span>
+									<mu-slide-top-transition>
+										<span v-if='info1' class='helpInfo'> 我的收益：我的税收收益总和</span>
+									</mu-slide-top-transition>
 								</mu-flex>
-
 							</mu-list-item-title>
 						</mu-list-item>
 						<mu-divider></mu-divider>
@@ -30,19 +41,19 @@
 								<mu-col span="4" class="agent-info-item">
 									<mu-flex direction="column" align-items="center" justify-content="center">
 										<mu-flex color="primary" :style="getPrimaryColor">总计</mu-flex>
-										<mu-flex class="text-color-gray">{{nums.all.income}}</mu-flex>
+										<mu-flex class="text-color-gray" v-if='nums.all.income'>{{nums.all.income}}</mu-flex>
 									</mu-flex>
 								</mu-col>
 								<mu-col span="4" class="agent-info-item">
 									<mu-flex direction="column" align-items="center">
 										<mu-flex color="primary">今日</mu-flex>
-										<mu-flex class="text-color-gray">{{nums.today_all.income}}</mu-flex>
+										<mu-flex class="text-color-gray" v-if='nums.today_all.income'>{{nums.today_all.income}}</mu-flex>
 									</mu-flex>
 								</mu-col>
 								<mu-col span="4">
 									<mu-flex direction="column" align-items="center">
 										<mu-flex color="primary">昨日</mu-flex>
-										<mu-flex class="text-color-gray">{{nums.yestoday_all.income}}</mu-flex>
+										<mu-flex class="text-color-gray" v-if='nums.yestoday_all.income'>{{nums.yestoday_all.income}}</mu-flex>
 									</mu-flex>
 								</mu-col>
 							</mu-row>
@@ -59,7 +70,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">团队流水</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="2"></mu-icon>
-									<span v-if='info2' class='helpInfo'> 团队流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+									<mu-slide-top-transition>
+										<span v-if='info2' class='helpInfo'> 团队流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -98,7 +111,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">下级流水</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="3"></mu-icon>
-									<span v-if='info3' class='helpInfo'> 下级流水：团队流水-直属流水</span>
+									<mu-slide-top-transition>
+										<span v-if='info3' class='helpInfo'> 下级流水：团队流水-直属流水</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -137,7 +152,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">直属流水</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="4"></mu-icon>
-									<span v-if='info4' class='helpInfo'> 下直属流水：直属玩家提供的流水总额</span>
+									<mu-slide-top-transition>
+										<span v-if='info4' class='helpInfo'> 下直属流水：直属玩家提供的流水总额</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -176,7 +193,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">团队税收</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="5"></mu-icon>
-									<span v-if='info5' class='helpInfo'> 团队税收：团队的税收收益总额（团队总流水*计税税率*团队最高代理分红额度）</span>
+									<mu-slide-top-transition>
+										<span v-if='info5' class='helpInfo'> 团队税收：团队的税收收益总额（团队总流水*计税税率*团队最高代理分红额度）</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -215,7 +234,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">下级税收</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="6"></mu-icon>
-									<span v-if='info6' class='helpInfo'> 下级税收：团队税收-直属税收</span>
+									<mu-slide-top-transition>
+										<span v-if='info6' class='helpInfo'> 下级税收：团队税收-直属税收</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -254,7 +275,9 @@
 									</mu-flex>
 									<mu-flex justify-content="center" class="mar-right-5 agent-title">直属税收</mu-flex>
 									<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="7"></mu-icon>
-									<span v-if='info7' class='helpInfo'> 直属税收：直属流水*计税税率*自身代理分红比例</span>
+									<mu-slide-top-transition>
+										<span v-if='info7' class='helpInfo'> 直属税收：直属流水*计税税率*自身代理分红比例</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 						</mu-list-item>
@@ -284,9 +307,8 @@
 						<mu-divider></mu-divider>
 					</mu-list>
 				</mu-paper>
-			</mu-container>
-		</mu-load-more>
-
+			</mu-load-more>
+		</mu-container>
 	</div>
 </template>
 
@@ -300,7 +322,7 @@
 		data() {
 			return {
 				user: null,
-				nums: {},
+				nums: null,
 				info1: false,
 				info2: false,
 				info3: false,
@@ -308,7 +330,8 @@
 				info5: false,
 				info6: false,
 				info7: false,
-				refreshing: false
+				refreshing: false,
+				topUp:false,
 
 			}
 		},
@@ -452,6 +475,23 @@
 				}, 1200)
 				this.load();
 			},
+			woListScroll(event) {
+				var scrollTop = event.target.scrollTop;
+				if(scrollTop > 1) {
+					this.topUp = true;
+				} else {
+					window.clearInterval(this.temp);
+					this.topUp = false;
+				}
+			},
+			onTop() {
+				var that = this;
+				var num = setInterval(function() {
+					that.$el.childNodes[4].scrollTop = that.$el.childNodes[4].scrollTop - 150 || 0;
+				}, 50)
+				that.temp = num;
+				//				this.$el.childNodes[4].scrollTop= 0 ;
+			},
 		},
 		components: {
 			'back': back,
@@ -459,7 +499,7 @@
 	}
 </script>
 
-<style type="text/css">
+<style type="text/css" scoped>
 	.mu-paper {
 		background-color: rgb(238, 238, 238) !important;
 		z-index: 1 !important;
@@ -472,14 +512,23 @@
 	}
 	
 	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 35% !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		overflow: initial;
+		white-space: normal;
+		display: block;
+		background-color: rgb(33, 150, 243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
+	}
+	.top_style {
+		position: fixed !important;
+		bottom: 20px;
+		right: 30px;
+		z-index: 9999;
 	}
 </style>

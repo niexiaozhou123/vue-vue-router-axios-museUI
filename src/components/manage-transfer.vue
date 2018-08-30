@@ -187,7 +187,12 @@
 				}
 				getBankList(url, params).then((res) => {
 					if(res.status === ERROR_OK) {
-						this.bankCards = res.data.data
+						let count = res.data.data.length;
+						for(var i=0;i<count;i++){
+							res.data.data[i].bank_number = this.$apps.addStar(res.data.data[i].bank_number, res.data.data[i].bank_number.substr(6, res.data.data[i].bank_number.length-10))||'';
+						}
+						this.bankCards = res.data.data;
+						
 					} else if(!res.status) {
 						eventBus.$emit('showNotification', '登录已过期')
 					} else {

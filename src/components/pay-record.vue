@@ -4,11 +4,20 @@
 			<mu-flex slot="left">
 				<back></back>
 			</mu-flex>
-			提现记录
+			提款记录
 		</mu-appbar>
 
-		<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" :loading='loading' @load='loadMore'>
-			<mu-container>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>
+			</mu-button>
+		</mu-scale-transition>
+
+		<mu-container @scroll='woListScroll($event)' class="whole-screen-wrapper">
+			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" :loading='loading' @load='loadMore'>
+
 				<mu-paper :z-depth="3" class="my-agent" v-for='item in countInfo' :key='item.id'>
 					<mu-list>
 						<mu-list-item>
@@ -68,9 +77,9 @@
 						</mu-list-item>
 					</mu-list>
 				</mu-paper>
-			</mu-container>
-		</mu-load-more>
 
+			</mu-load-more>
+		</mu-container>
 	</div>
 </template>
 
@@ -83,10 +92,11 @@
 		data() {
 			return {
 				user: null,
-				countInfo: {},
+				countInfo: [],
 				refreshing: false,
 				loading: false,
 				pageNum: 1,
+				topUp: false,
 
 			}
 		},
@@ -117,15 +127,15 @@
 								eventBus.$emit('showNotification', '暂无更多提现记录.')
 								return;
 							}
-							if(this.pageNum==1){
+							if(this.pageNum == 1) {
 								this.countInfo = response.data.data.data;
-							}else{
+							} else {
 								var count = response.data.data.data.length;
-								for(var i=0;i<count;i++){
+								for(var i = 0; i < count; i++) {
 									this.countInfo.push(response.data.data.data[i]);
 								}
 							}
-							
+
 						} else if(!res.data.status) {
 							eventBus.$emit('showNotification', '登录已过期')
 						} else {
@@ -146,7 +156,7 @@
 					this.refreshing = false;
 					//数据 列表重置
 					this.countInfo.length = 0;
-					this.pageNum =1;
+					this.pageNum = 1;
 				}, 1200)
 				this.load();
 			},
@@ -155,9 +165,26 @@
 				this.pageNum = this.pageNum + 1;
 				setTimeout(() => {
 					this.loading = false;
-					
+
 					this.load();
 				}, 1500)
+			},
+			woListScroll(event) {
+				var scrollTop = event.target.scrollTop;				
+				if(scrollTop > 1) {
+					this.topUp = true;
+				} else {
+					window.clearInterval(this.temp);
+					this.topUp = false;
+				}
+			},
+			onTop() {
+				var that = this;
+				var num = setInterval(function() {
+					that.$el.childNodes[4].scrollTop = that.$el.childNodes[4].scrollTop - 150 || 0;
+				}, 50)
+				that.temp = num;
+				//				this.$el.childNodes[4].scrollTop= 0 ;
 			},
 		},
 		components: {
@@ -166,7 +193,7 @@
 	}
 </script>
 
-<style type="text/css">
+<style type="text/css" scoped>
 	.mu-paper {
 		background-color: rgb(238, 238, 238) !important;
 		z-index: 1 !important;
@@ -176,5 +203,12 @@
 		margin: 10px 0 !important;
 		background-color: rgb(255, 255, 255) !important;
 		z-index: 99 !important;
+	}
+	
+	.top_style {
+		position: fixed !important;
+		bottom: 20px;
+		right: 30px;
+		z-index: 9999;
 	}
 </style>

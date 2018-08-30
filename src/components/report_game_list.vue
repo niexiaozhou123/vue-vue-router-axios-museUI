@@ -12,9 +12,14 @@
 		</mu-appbar>
 
 		<!--top-->
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>				
+			</mu-button>
+		</mu-scale-transition>
+		
 
 		<mu-container style="padding:0 16px;overflow: hidden;" @click="delInfo" ref='container'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
@@ -24,12 +29,15 @@
 						<span :style="{borderBottom:agentborder}" @click='chose'>亏损记录<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="2"></mu-icon></span>
 					</mu-form-item>
 				</mu-form>
-
-				<span v-if='info1' class='helpInfo'>游戏流水：当前操作提供的游戏流水总额 </br>
+				
+				<mu-slide-top-transition>
+					<span v-if='info1' class='helpInfo'>游戏流水：当前操作提供的游戏流水总额 </br>
                                 税收收益：当前操作提供给代理的税收收益总额（游戏流水*计税税率*（代理分红比-下级代理分红比））	</span>
 
 				<span v-if='info2' class='helpInfo'>游戏流水：当前操作提供的游戏流水总额 </br>
 						亏损收益：当前操作提供给总代团队带来的亏损收益额（游戏流水*(1-计税税率)*当前代理亏损分红比）	</span>
+				</mu-slide-top-transition>
+				
 				<span class='tip_text' ref='tip_text' :style='{color:tip_textColor,background:tip_textbgc}'>{{tip_text}}</span>
 
 				<mu-paper :z-depth="3" v-for='item in datalist' :key='item.id'>
@@ -153,6 +161,7 @@
 				openSearch: false,
 				info1: false,
 				info2: false,
+				temp:0,
 				tip_text: '*仅展示近一个月内的记录',
 				tip_textColor: '#f44336',
 				tip_textbgc: 'none',
@@ -438,15 +447,18 @@
 	}
 	
 	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
 	}
 	
 	.infoTitle {

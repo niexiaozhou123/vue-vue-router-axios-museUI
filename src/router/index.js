@@ -63,201 +63,230 @@ export default new Router({
 		{
 			path: '/',
 			name: 'home',
-			component: Home
+			component: Home,
+			meta:{index:0}
 		},
 		{
 			path: '/detail/',
 			name: 'detail',
-			component: Detail
+			component: Detail,
+			meta:{index:1}
 		},
 		{
 			path: '/report/team/',
 			name: 'report-team',
-			component: ReportTeam
-		},
-		{
-			path: '/report/team/detail',
-			name: 'report-team-detail',
-			component: ReportTeamDeatil
-		},
-		{
-			path: '/report/date/',
-			name: 'report-date',
-			component: ReportDate
-		},
-		{
-			path: '/report/date/detail/',
-			name: 'report-date-dateil',
-			component: ReportDateDeatil
+			component: ReportTeam,
+			meta:{index:1}
 		},
 		{
 			path: '/report/player/',
 			name: 'report-player',
-			component: ReportPlayer
+			component: ReportPlayer,
+			meta:{index:1}
 		},
 		{
-			path: '/report/player/list/',
-			name: 'report-player-list',
-			component: ReportPlayerList
-		},
-		{
-			path: '/report/player/searchlist/',
-			name: 'report-player-search-list',
-			component: ReportPlayerSearchList
+			path: '/report/date/',
+			name: 'report-date',
+			component: ReportDate,
+			meta:{index:1}
 		},
 		{
 			path: '/report/game/',
 			name: 'report-game',
-			component: ReportGame
-		},
-		{
-			path: '/report/game/list/',
-			name: 'report-game-list',
-			component: ReportGameList
-		},
-		{
-			path: '/report/game/pay/',
-			name: 'report-game-pay',
-			component: ReportGamePay
-		},
-		{
-			path: '/agent/register/',
-			name: 'agent-register',
-			component: AgentRegister
-		},
-		{
-			path: '/agent/register/edit',
-			name: 'agent-register-edit',
-			component: AgentRegisterEdit
-		},
-		{
-			path: '/player/change/',
-			name: 'player-change',
-			component: PlayerChange
-		},
-		{
-			path: '/manage/transfer/',
-			name: 'manage-transfer',
-			component: ManageTransfer
-		},
-
-		{
-			path: '/user/info/',
-			name: 'user-info',
-			component: UserInfo
-		},
-		{
-			path: '/user/mail/',
-			name: 'user-mail',
-			component: UserMail
-		},
-		{
-			path: '/user/password/',
-			name: 'user-password',
-			component: UserPassword
-		},
-		{
-			path: '/user/result/',
-			name: 'user-result',
-			component: UserResult
-		},
-		{
-			path: '/manage/bound/alipay/', 
-			name: 'manage-bound-alipay',
-			component: ManageBoundAlipay
-		},
-		{
-			path: '/manage/alipay/transfer/', 
-			name: 'manage-alipay-transfer',
-			component: ManageAlipayTransfer
-		},
-		{
-			path: '/manage/card/',
-			name: 'manage-card',
-			component: ManageCard
-
-		},
-		{
-			path: '/refresh/',
-			name: 'refresh', 
-			component: Refresh
-
+			component: ReportGame,
+			meta:{index:1}
 		},
 		{
 			path: '/sub/reg/',
 			name: 'sub-reg',
-			component: SubReg
+			component: SubReg,
+			meta:{index:1}
+		},		
+		{
+			path: '/pay/record/',
+			name: 'pay-record',
+			component: payRecord,
+			meta:{index:1}
 		},
 		{
 			path: '/sub/transfer/',
 			name: 'sub-transfer',
-			component: SubTransfer
+			component: SubTransfer,
+			meta:{index:1}
 		},
 		{
 			path: '/sub/paytoplayer/',
 			name: 'sub-paytoplayer',
-			component: SubPaytoPlayer
-		},		
-		{
-			path: '/payAndturn/record/',
-			name: 'payAndturn-record',
-			component: payAndturnRecord
-		},
-		{
-			path: '/pay/record/',
-			name: 'pay-record',
-			component: payRecord
+			component: SubPaytoPlayer,
+			meta:{index:1}
 		},
 		{
 			path: '/extend/',
 			name: 'extend',
-			component: extend
-		},
-		{
-			path: '/extend/edit/',
-			name: 'extend-edit',
-			component: extendEdit
+			component: extend,
+			meta:{index:1}
 		},
 		{
 			path: '/copy/create/',
 			name: 'copy-create',
-			component: copyCreate
+			component: copyCreate,
+			meta:{index:1}
 		},
 		{
-			path: '/copy/create/edit/',
-			name: 'copy-create-edit',
-			component: copyCreateEdit
-		},		
+			path: '/agent/register/',
+			name: 'agent-register',
+			component: AgentRegister,
+			meta:{index:1}
+		},
 		{
-			path: '/manage/card/edit/',
-			name: 'manage-card-edit',
-			component: ManageCardEdit
-
+			path: '/player/change/',
+			name: 'player-change',
+			component: PlayerChange,
+			meta:{index:1}
 		},
 		{
 			path: '/manage/spread/',
 			name: 'manage-spread',
-			component: ManageSpread
-
+			component: ManageSpread,
+			meta:{index:1}
+		},
+		{
+			path: '/manage/transfer/',
+			name: 'manage-transfer',
+			component: ManageTransfer,
+			meta:{index:1}
+		},
+		{
+			path: '/manage/alipay/transfer/', 
+			name: 'manage-alipay-transfer',
+			component: ManageAlipayTransfer,
+			meta:{index:1}
+		},
+		{
+			path: '/user/info/',
+			name: 'user-info',
+			component: UserInfo,
+			meta:{index:1}
+		},
+		{
+			path: '/user/mail/',
+			name: 'user-mail',
+			component: UserMail,
+			meta:{index:1}
+		},
+		{
+			path: '/user/password/',
+			name: 'user-password',
+			component: UserPassword,
+			meta:{index:1}
+		},
+		{
+			path: '/user/result/',
+			name: 'user-result',
+			component: UserResult,
+			meta:{index:1}
+		},
+		{
+			path: '/manage/bound/alipay/', 
+			name: 'manage-bound-alipay',
+			component: ManageBoundAlipay,
+			meta:{index:1}
+		},
+		{
+			path: '/manage/card/',
+			name: 'manage-card',
+			component: ManageCard,
+			meta:{index:1}
+		},
+		{
+			path: '/refresh/',
+			name: 'refresh', 
+			component: Refresh,
+			meta:{index:1}
+		},
+		{
+			path: '/report/date/detail/',
+			name: 'report-date-dateil',
+			component: ReportDateDeatil,
+			meta:{index:2}
+		},
+		{
+			path: '/report/team/detail',
+			name: 'report-team-detail',
+			component: ReportTeamDeatil,
+			meta:{index:2}
+		},
+		
+		{
+			path: '/report/player/list/',
+			name: 'report-player-list',
+			component: ReportPlayerList,
+			meta:{index:2}
+		},
+		{
+			path: '/extend/edit/',
+			name: 'extend-edit',
+			component: extendEdit,
+			meta:{index:2}
+		},
+		{
+			path: '/report/game/list/',
+			name: 'report-game-list',
+			component: ReportGameList,
+			meta:{index:2}
+		},
+		{
+			path: '/report/game/pay/',
+			name: 'report-game-pay',
+			component: ReportGamePay,
+			meta:{index:2}
+		},
+		{
+			path: '/copy/create/edit/',
+			name: 'copy-create-edit',
+			component: copyCreateEdit,
+			meta:{index:2}
+		},
+		{
+			path: '/agent/register/edit',
+			name: 'agent-register-edit',
+			component: AgentRegisterEdit,
+			meta:{index:2}
 		},
 		{
 			path: '/manage/spread/edit/',
 			name: 'manage-spread-edit',
-			component: ManageSpreadEdit
-
+			component: ManageSpreadEdit,
+			meta:{index:2}
 		},
 		{
 			path: '/manage/spread/detail/',
 			name: 'manage-spread-detail',
-			component: ManageSpreadDetail
-
+			component: ManageSpreadDetail,
+			meta:{index:2}
 		},
+		{
+			path: '/manage/card/edit/',
+			name: 'manage-card-edit',
+			component: ManageCardEdit,
+			meta:{index:2}
+		},
+		{
+			path: '/report/player/searchlist/',
+			name: 'report-player-search-list',
+			component: ReportPlayerSearchList,
+			meta:{index:3}
+		},					
+//		{
+//			path: '/payAndturn/record/',
+//			name: 'payAndturn-record',
+//			component: payAndturnRecord
+//		},				
 		{
 			path: '(.*)',
 			name: 'not-found',
-			component: notFound
-
+			component: notFound,
+			meta:{index:4}
 		},
-
 	]
 })

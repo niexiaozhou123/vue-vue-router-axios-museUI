@@ -12,13 +12,22 @@
 		</mu-appbar>
 		
 		<!--蒙层-->
-		<div class="mengceng" v-if="ismengceng" @click="closePanel"></div>
+		<mu-scale-transition>
+			<div class="mengceng" v-if="ismengceng" @click="closePanel"></div>
+		</mu-scale-transition>
+		
 		
 		
 		<!-- 账户信息简介 -->
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>			
+			</mu-button>
+		</mu-scale-transition>
+		
+		
 		<mu-container @click='delInfo' ref='homeContext'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
 				<mu-paper :z-depth="3" class="brief-info">
@@ -78,9 +87,11 @@
 									<mu-flex justify-content="center">
 										<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="1"></mu-icon>
 									</mu-flex>
-									<span v-if='tuandui' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
-									<span v-if='tuanduizheng' class='helpInfo'> 团队正流水：旗下玩家从系统赢走的流水总数</span>
-									<span v-if='tuanduifu' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数</span>
+									<mu-slide-top-transition>
+										<span v-if='tuandui' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+										<span v-if='tuanduizheng' class='helpInfo'> 团队正流水：旗下玩家从系统赢走的流水总数</span>
+										<span v-if='tuanduifu' class='helpInfo'>团队负流水：旗下玩家输给系统的流水总数</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 							<mu-list-item-action class="show-info-value" type='password' v-if='showAllInfo'> {{flow}}</mu-list-item-action>
@@ -124,9 +135,11 @@
 									<mu-flex justify-content="center">
 										<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="4"></mu-icon>
 									</mu-flex>
-									<span v-if='tuanduitodaycount' class='helpInfo'> 今日团队总流水：今天团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
-									<span v-if='tuanduitodayzheng' class='helpInfo'>今日团队正流水：旗下玩家从系统赢走的流水总数</span>
-									<span v-if='tuanduitodayfu' class='helpInfo'>今天团队负流水：旗下玩家输给系统的流水总数</span>
+									<mu-slide-top-transition>
+										<span v-if='tuanduitodaycount' class='helpInfo'> 今日团队总流水：今天团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）</span>
+										<span v-if='tuanduitodayzheng' class='helpInfo'>今日团队正流水：旗下玩家从系统赢走的流水总数</span>
+										<span v-if='tuanduitodayfu' class='helpInfo'>今天团队负流水：旗下玩家输给系统的流水总数</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 							<mu-list-item-action class="show-info-value" v-if='showAllInfo'>{{flowToday}}</mu-list-item-action>
@@ -169,7 +182,9 @@
 									<mu-flex justify-content="center">
 										<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="7"></mu-icon>
 									</mu-flex>
-									<span v-if='geren' class='helpInfo'>今天个人税收收益：今天团队税收收益总额-所有直属代理团队税收收益总额</span>
+									<mu-slide-top-transition>
+										<span v-if='geren' class='helpInfo'>今天个人税收收益：今天团队税收收益总额-所有直属代理团队税收收益总额</span>
+									</mu-slide-top-transition>
 								</mu-flex>
 							</mu-list-item-title>
 							<mu-list-item-action class="show-info-value" v-if='showAllInfo'>{{taxIncomeToday}}</mu-list-item-action>
@@ -416,9 +431,11 @@
 			</mu-container>
 		</mu-drawer>
 		<!--二维码查看-->
+		<mu-scale-transition>
 		<mu-dialog class='img_dialog' :open.sync="openSimple">
 			<img :src="imgsrc" />
 		</mu-dialog>
+		</mu-scale-transition>
 
 		<mu-snackbar position="top" color="#fff" :open.sync="isShow">
 			{{message}}
@@ -503,7 +520,7 @@
 				geren: false,
 
 				user: null,
-				topUp: true, //置顶按钮
+				topUp: false, //置顶按钮
 			}
 		},
 		computed: {
@@ -795,8 +812,9 @@
 				}
 			},
 			onTop() {
-				var currentScroll = document.documentElement.scrollTop;
-				document.documentElement.scrollTop = 0;
+				
+				document.documentElement.scrollTop  = 0;
+				document.body.scrollTop =0;
 				clearInterval(0);
 			},
 			goExtend() {
@@ -810,7 +828,7 @@
 <style lang="scss" rel="stylesheet/sass" scoped>
 	@import 'common/sass/variable.scss';
 	.container {
-		margin-top: 65px !important;
+		margin-top: 55px !important;
 		padding-bottom: 30px;
 		background-color: $bg-color-gray;
 		.info-title {
@@ -938,18 +956,19 @@
 		right: 0;
 	}
 	
-	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgba(0, 136, 255,0.95) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		font-weight: 800;
-		overflow: inherit !important;
-		white-space: normal !important;
-		padding: 5px 18% !important;
+	.helpInfo {		
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
 	}
 	
 	.top_style {

@@ -26,29 +26,30 @@
 
 					</mu-flex>
 				</mu-flex>
-
-				<mu-menu cover :open.sync='menuOpen' style='position: fixed !important; left: 80px;top: 200px;'>
-					<mu-list slot="content">
-						<mu-list-item button @click='goDetail'>
-							<mu-list-item-content>查看详情</mu-list-item-content>
-							<mu-list-item-action>
-								<mu-icon value='chevron_right'></mu-icon>
-							</mu-list-item-action>
-						</mu-list-item>
-						<mu-list-item button @click='goEdit'>
-							<mu-list-item-content>调整分成比例和配额</mu-list-item-content>
-							<mu-list-item-action>
-								<mu-icon value='chevron_right'></mu-icon>
-							</mu-list-item-action>
-						</mu-list-item>
-						<mu-list-item button @click='menuOpen=false'>
-							<mu-list-item-content>取消</mu-list-item-content>
-							<mu-list-item-action>
-								<mu-icon value='chevron_right'></mu-icon>
-							</mu-list-item-action>
-						</mu-list-item>
-					</mu-list>
-				</mu-menu>
+				<mu-expand-transition>
+					<mu-menu cover :open.sync='menuOpen' style='position: fixed !important; left: 80px;top: 200px;'>
+						<mu-list slot="content">
+							<mu-list-item button @click='goDetail'>
+								<mu-list-item-content>查看详情</mu-list-item-content>
+								<mu-list-item-action>
+									<mu-icon value='chevron_right'></mu-icon>
+								</mu-list-item-action>
+							</mu-list-item>
+							<mu-list-item button @click='goEdit'>
+								<mu-list-item-content>调整分成比例和配额</mu-list-item-content>
+								<mu-list-item-action>
+									<mu-icon value='chevron_right'></mu-icon>
+								</mu-list-item-action>
+							</mu-list-item>
+							<mu-list-item button @click='menuOpen=false'>
+								<mu-list-item-content>取消</mu-list-item-content>
+								<mu-list-item-action>
+									<mu-icon value='chevron_right'></mu-icon>
+								</mu-list-item-action>
+							</mu-list-item>
+						</mu-list>
+					</mu-menu>
+				</mu-expand-transition>
 
 				<!-- 代理信息 -->
 				<mu-paper :z-depth="3" class="list-item" v-for="item in detailInfo" :key="item.id" style='background-color: #FFFFFF !important;'>

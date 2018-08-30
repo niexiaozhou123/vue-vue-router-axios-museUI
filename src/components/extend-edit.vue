@@ -7,8 +7,8 @@
 			推广链接
 		</mu-appbar>
 
-		<mu-container>
-			<mu-paper :z-depth="3" style='margin: 60px 10px 10px 10px !important; padding: 0 8px; background-color: #FFFFFF !important;'>
+		<mu-container >
+			<mu-paper :z-depth="3" style='margin: 10px  !important; padding: 0 8px; background-color: #FFFFFF !important;'>
 				<mu-form :model="form" :label-position="labelPosition">
 					<mu-form-item prop="input" label="配置名称" class="label-font">
 						<mu-text-field v-model="form.input" placeholder="请输入配置名称"></mu-text-field>

@@ -12,11 +12,16 @@
 		</mu-appbar>
 
 		<!-- 内容主体 -->
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>
+			</mu-button>
+		</mu-scale-transition>
+		
 
-		<mu-container class="whole-screen-wrapper" @click='delInfo' @scroll='woListScroll($event)' style='margin-top: 0 !important; overflow: auto !important;'>
+		<mu-container class="whole-screen-wrapper" @click='delInfo' @scroll='woListScroll($event)' style='margin-top: 10px !important; overflow: auto !important;'>
 			<!-- 用户信息 -->
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container" :loading='loading' @load="load2" loading-text='正在加载...'>
 				<mu-flex class="user-info" style='display: flex; flex-direction: row !important; justify-content: space-between !important;'>
@@ -28,9 +33,14 @@
 						<mu-icon value="help" color="primary" class="question-mark" size='18' @click.stop='info' data-num="1"></mu-icon>
 					</mu-flex>
 				</mu-flex>
-				<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）  </br>
+				
+				<mu-slide-top-transition>
+					<span v-if='info1' class='helpInfo'>团队总流水：团队所有玩家提供的流水总额（直属玩家流水+下级团队玩家流水）  </br>
                                                                                     团队税收收益：团队的税收收益总额（团队总流水*计税税率*团队最高代理分红额度）	</span>
+				</mu-slide-top-transition>
+				
 				<span class='tip_text' ref='tip_text' :style='{color:tip_textColor,background:tip_textbgc}'>{{tip_text}}</span>
+				
 				<!-- 日度报告列表 -->
 				<mu-paper :z-depth="3" class="list-item" v-for="reportItem in detailInfo" :key="reportItem.date" style='background-color: #FFFFFF;'>
 					<mu-flex align-items="center" data-id="reportItem.promoters_id" @click="toDetailPage(reportItem.date)">
@@ -337,6 +347,12 @@
 			}
 		}
 	}
+	.start {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
 	
 	.mu-form-item {
 		margin-bottom: 5px;
@@ -347,15 +363,18 @@
 	}
 	
 	.helpInfo {
-		position: fixed;
-		right: 15px !important;
-		left: 15px !important;
-		z-index: 999 !important;
-		background-color: rgb(33, 150, 243) !important;
-		padding: 10px !important;
-		font-size: 12px !important;
-		overflow: inherit !important;
-		white-space: normal !important;
+		overflow:initial;
+		white-space: normal ;
+		display: block;
+		background-color: rgb(33,150,243);
+		padding: 5px 10px !important;
+		position: absolute;
+		top: 30px;	
+		color: #FFFFFF;
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		z-index: 1000;
 	}
 	
 	.top_style {

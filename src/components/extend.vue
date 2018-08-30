@@ -8,9 +8,13 @@
 			<mu-icon value="add_circle_outline" class="add-circle-outline" slot="right" @click="goExtendEdit"></mu-icon>
 		</mu-appbar>
 
-		<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
-			<mu-icon value="arrow_upward"></mu-icon>
-		</mu-button>
+		<mu-scale-transition>
+			<mu-button fab small color="teal" v-if='topUp' class='top_style' @click='onTop'>
+				<mu-ripple color="yellow" :opacity="0.5">
+					<mu-icon value="arrow_upward"></mu-icon>
+				</mu-ripple>			
+			</mu-button>
+		</mu-scale-transition>
 
 		<mu-container class="whole-screen-wrapper2" @scroll='woListScroll($event)' style=' overflow: auto !important;'>
 			<mu-load-more @refresh="refresh" :refreshing="refreshing" ref="container">
